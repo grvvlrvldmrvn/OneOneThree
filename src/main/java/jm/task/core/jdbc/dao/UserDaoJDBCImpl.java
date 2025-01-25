@@ -1,5 +1,6 @@
 package jm.task.core.jdbc.dao;
 
+import jm.task.core.jdbc.exception.*;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 
@@ -8,12 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class UserDaoJDBCImpl implements UserDao {
-    Logger logger = Logger.getLogger(getClass().getName());
-
     Util util = new Util();
     PreparedStatement preparedStatement;
 
@@ -35,7 +32,7 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement = util.getConnection().prepareStatement(createTheTable);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, e.getMessage());
+            throw new CreateTableException("Ошибка при создании таблицы", e);
         }
     }
 
@@ -47,7 +44,7 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement = util.getConnection().prepareStatement(dropTheTable);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, e.getMessage());
+            throw new DropTableException("Ошибка при удалении таблицы", e);
         }
     }
 
@@ -61,7 +58,7 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement.setInt(3, age);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, e.getMessage());
+            throw new SaveUserException("Ошибка при сохранении пользователя в таблицу ", e);
         }
     }
 
@@ -71,7 +68,7 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement = util.getConnection().prepareStatement(deleteFromTable);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, e.getMessage());
+            throw new RemoveUserByIdException("Ошибка при удалении пользователя из таблицы", e);
         }
     }
 
@@ -89,7 +86,7 @@ public class UserDaoJDBCImpl implements UserDao {
                 userList.add(user);
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, e.getMessage());
+            throw new GetAllUsersException("Ошибка при получении всех пользователей из таблицы", e);
         }
         return userList;
     }
@@ -100,7 +97,7 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement = util.getConnection().prepareStatement(deleteAllFromTable);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, e.getMessage());
+            throw new CleanUsersTableException("Ошибка при отчистке таблицы", e);
         }
     }
 }

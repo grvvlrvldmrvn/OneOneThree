@@ -1,5 +1,7 @@
 package jm.task.core.jdbc.util;
 
+import jm.task.core.jdbc.exception.*;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -29,17 +31,5 @@ public class Util {
         } catch (SQLException e) {
             throw new DatabaseCloseException("Ошибка при закрытии соединения с базой данных", e);
         }
-    }
-}
-
-class DatabaseConnectionException extends RuntimeException {
-    public DatabaseConnectionException(String message, Throwable cause) {
-        super(message, cause);
-    }
-}
-
-class DatabaseCloseException extends RuntimeException {
-    public DatabaseCloseException(String message, Throwable cause) {
-        super(message, cause);
     }
 }
