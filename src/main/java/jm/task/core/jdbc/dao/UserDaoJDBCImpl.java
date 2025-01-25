@@ -6,7 +6,6 @@ import jm.task.core.jdbc.util.Util;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -17,7 +16,6 @@ public class UserDaoJDBCImpl implements UserDao {
 
     Util util = new Util();
     PreparedStatement preparedStatement;
-    Statement statement;
 
     public UserDaoJDBCImpl() {
 
